@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salon Loyalty — Your Beauty Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #c9857a;
+    --rose-light: #e8b4ad;
+    --rose-dark: #9e5c52;
+    --cream: #faf6f2;
+    --warm-white: #fff9f7;
+    --gold: #c4a882;
+    --gold-light: #e8d9c5;
+    --charcoal: #2a2220;
+    --muted: #8a7a76;
+    --border: #e8ddd8;
+    --success: #7a9e7e;
+    --error: #c97a7a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+    font-weight: 300;
+  }
+
+  /* ── SPLASH / LOGIN ── */
+  #splash {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #faf0ec 0%, #f5e8e0 40%, #ede0d8 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #splash::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,133,122,0.12) 0%, transparent 70%);
+    top: -150px; right: -150px;
+    pointer-events: none;
+  }
+  #splash::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,168,130,0.1) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+    pointer-events: none;
+  }
+
+  .salon-logo {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeDown 0.8s ease both;
+  }
+  .salon-logo .scissors {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--rose);
+  }
+  .salon-logo h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+  }
+  .salon-logo p {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .login-card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeUp 0.8s 0.2s ease both;
+    box-shadow: 0 20px 60px rgba(180,120,110,0.1);
+  }
+
+  .login-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+    gap: 0;
+  }
+  .tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.75rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab-btn.active {
+    color: var(--rose-dark);
+    border-bottom-color: var(--rose);
+  }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--warm-white);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--rose-light);
+    box-shadow: 0 0 0 3px rgba(201,133,122,0.1);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-dark) 100%);
+    color: white;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(158,92,82,0.35);
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-secondary:hover { border-color: var(--rose-light); color: var(--rose-dark); }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, #a8885e 100%);
+    color: white;
+  }
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(196,168,130,0.4);
+  }
+  .btn-sm {
+    width: auto;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.7rem;
+  }
+  .btn-danger {
+    background: transparent;
+    border: 1px solid #e8c0c0;
+    color: var(--error);
+  }
+  .btn-danger:hover { background: #fdf0f0; }
+
+  .msg {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .msg.error { background: #fdf0f0; color: var(--error); border: 1px solid #f0d0d0; display: block; }
+  .msg.success { background: #f0f7f1; color: var(--success); border: 1px solid #c8e0cc; display: block; }
+
+  /* ── MAIN APP ── */
+  #app { display: none; min-height: 100vh; }
+
+  .app-header {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .app-header .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    letter-spacing: 0.05em;
+  }
+  .app-header .logo span { color: var(--rose); }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .user-pill {
+    background: var(--gold-light);
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #8a6e4a;
+  }
+  .logout-btn {
+    background: none; border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .logout-btn:hover { color: var(--rose-dark); }
+
+  /* ── CUSTOMER VIEW ── */
+  #customer-view {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    margin-bottom: 0.25rem;
+  }
+  .greeting em { color: var(--rose); font-style: italic; }
+  .greeting-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* Loyalty Card */
+  .loyalty-card {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #3d2e2b 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .loyalty-card::before {
+    content: '✂';
+    position: absolute;
+    font-size: 8rem;
+    right: -1rem; bottom: -2rem;
+    opacity: 0.06;
+    transform: rotate(20deg);
+  }
+  .loyalty-card .card-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+  .loyalty-card .cut-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .loyalty-card .cut-count span { font-size: 1.5rem; opacity: 0.5; }
+  .loyalty-card .progress-bar {
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+    height: 6px;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .loyalty-card .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose-light), var(--gold));
+    border-radius: 50px;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .loyalty-card .progress-dots {
+    display: flex; gap: 0.4rem; margin: 0.75rem 0;
+    flex-wrap: wrap;
+  }
+  .dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem;
+    transition: all 0.3s;
+  }
+  .dot.filled { background: var(--rose); border-color: var(--rose); }
+  .dot.free { background: var(--gold); border-color: var(--gold); }
+  .loyalty-card .next-free {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+
+  /* Free coupon */
+  .coupon {
+    background: linear-gradient(135deg, #fff8f5 0%, #fff3ee 100%);
+    border: 2px dashed var(--rose-light);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    animation: pulse 2s ease infinite;
+  }
+  .coupon .coupon-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .coupon h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--rose-dark);
+    margin-bottom: 0.25rem;
+  }
+  .coupon p { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+  .coupon-code {
+    background: var(--charcoal);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    display: inline-block;
+  }
+
+  /* Offers */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .offers-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
+  .offer-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: all 0.3s;
+  }
+  .offer-card:hover { border-color: var(--rose-light); box-shadow: 0 4px 20px rgba(201,133,122,0.1); }
+  .offer-card .offer-badge {
+    display: inline-block;
+    background: var(--gold-light);
+    color: #8a6e4a;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    margin-bottom: 0.5rem;
+  }
+  .offer-card h4 { font-size: 1rem; font-weight: 400; margin-bottom: 0.25rem; }
+  .offer-card p { font-size: 0.82rem; color: var(--muted); }
+
+  /* Visit history */
+  .history-list { display: grid; gap: 0.5rem; }
+  .history-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+  }
+  .history-item .visit-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--rose);
+    width: 2rem;
+  }
+  .history-item .visit-date { color: var(--muted); font-size: 0.8rem; }
+  .badge-free {
+    background: var(--gold-light);
+    color: #8a6e4a;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+  }
+
+  /* ── OWNER VIEW ── */
+  #owner-view {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .owner-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+    flex-wrap: wrap;
+  }
+  .owner-tab {
+    background: none; border: none;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .owner-tab.active { color: var(--rose-dark); border-bottom-color: var(--rose); }
+
+  .owner-panel { display: none; }
+  .owner-panel.active { display: block; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .stat-card .stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--rose);
+    line-height: 1;
+  }
+  .stat-card .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  /* Customer table */
+  .customers-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: 0.85rem;
+  }
+  .customers-table th {
+    background: #faf4f2;
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    border-bottom: 1px solid var(--border);
+  }
+  .customers-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid #f5efec;
+    vertical-align: middle;
+  }
+  .customers-table tr:last-child td { border-bottom: none; }
+  .customers-table tr:hover td { background: #fdf8f6; }
+
+  .loyalty-mini {
+    display: flex; gap: 3px; align-items: center;
+  }
+  .mini-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border);
+  }
+  .mini-dot.on { background: var(--rose); }
+  .mini-dot.gold { background: var(--gold); }
+
+  .badge-due {
+    background: #fef3f0;
+    color: var(--rose-dark);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    border: 1px solid var(--rose-light);
+    text-transform: uppercase;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+    color: var(--charcoal);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .offer-manage-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .offer-manage-item .offer-info { flex: 1; }
+  .offer-manage-item h4 { font-size: 0.9rem; font-weight: 400; margin-bottom: 0.2rem; }
+  .offer-manage-item p { font-size: 0.78rem; color: var(--muted); }
+
+  /* Animations */
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,133,122,0.2); }
+    50% { box-shadow: 0 0 0 8px rgba(201,133,122,0); }
+  }
+
+  .hidden { display: none !important; }
+  .text-center { text-align: center; }
+  .mt1 { margin-top: 1rem; }
+  .empty-state {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--muted); font-size: 0.85rem;
+  }
+  .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.5; }
+
+  /* Record visit panel */
+  .record-search {
+    display: flex; gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+  .record-search input { flex: 1; }
+  .record-search .btn { width: auto; padding: 0.85rem 1.5rem; }
+
+  .customer-found {
+    background: #fdf8f6;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .customer-found .cf-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+  }
+  .customer-found .cf-stats { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SPLASH / LOGIN ══════════════ -->
+<div id="splash">
+  <div class="salon-logo">
+    <span class="scissors">✂</span>
+    <h1>Salon<br><em>Loyalty</em></h1>
+    <p>Your Beauty Journey</p>
+  </div>
+
+  <div class="login-card">
+    <div class="login-tabs">
+      <button class="tab-btn active" onclick="switchTab('customer')">Customer</button>
+      <button class="tab-btn" onclick="switchTab('owner')">Salon Owner</button>
+    </div>
+
+    <!-- CUSTOMER LOGIN -->
+    <div id="tab-customer">
+      <div id="cust-msg" class="msg"></div>
+      <div class="form-group">
+        <label>Your Name or Email</label>
+        <input type="text" id="cust-login" placeholder="e.g. Anna">
+      </div>
+      <div class="form-group">
+        <label>PIN / Password</label>
+        <input type="password" id="cust-pass" placeholder="••••">
+      </div>
+      <button class="btn btn-primary" onclick="customerLogin()">Sign In</button>
+    </div>
+
+    <!-- OWNER LOGIN -->
+    <div id="tab-owner" class="hidden">
+      <div id="owner-msg" class="msg"></div>
+      <div class="form-group">
+        <label>Owner Password</label>
+        <input type="password" id="owner-pass" placeholder="••••">
+      </div>
+      <button class="btn btn-primary" onclick="ownerLogin()">Enter Salon Panel</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.75rem;color:var(--muted)">Default: <strong>salon2024</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MAIN APP ══════════════ -->
+<div id="app">
+  <header class="app-header">
+    <div class="logo">Salon <span>Loyalty</span></div>
+    <div class="header-right">
+      <div class="user-pill" id="header-user">Guest</div>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- ── CUSTOMER VIEW ── -->
+  <div id="customer-view">
+    <p class="greeting">Welcome back, <em id="cust-name-display">—</em></p>
+    <p class="greeting-sub">Your loyalty journey</p>
+
+    <!-- Free coupon (shown when due) -->
+    <div id="coupon-section" class="coupon hidden">
+      <div class="coupon-icon">🎉</div>
+      <h3>Your next visit is FREE!</h3>
+      <p>Present this code to your stylist</p>
+      <div class="coupon-code" id="coupon-code-display">—</div>
+    </div>
+
+    <!-- Loyalty card -->
+    <div class="loyalty-card" id="loyalty-card">
+      <div class="card-title">Haircut Loyalty</div>
+      <div class="cut-count" id="cut-count-display">0 <span>/ 10</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-dots" id="progress-dots"></div>
+      <div class="next-free" id="next-free-text">Complete 10 visits for a free haircut</div>
+    </div>
+
+    <!-- Offers -->
+    <div id="offers-section">
+      <h2 class="section-title">Current Offers</h2>
+      <div class="offers-grid" id="offers-grid">
+        <div class="empty-state"><div class="empty-icon">🌸</div><p>No offers at the moment</p></div>
+      </div>
+    </div>
+
+    <!-- Visit history -->
+    <div>
+      <h2 class="section-title">Visit History</h2>
+      <div class="history-list" id="history-list">
+        <div class="empty-state"><div class="empty-icon">✂</div><p>No visits recorded yet</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OWNER VIEW ── -->
+  <div id="owner-view" class="hidden">
+    <div class="owner-tabs">
+      <button class="owner-tab active" onclick="ownerTab('dashboard')">Dashboard</button>
+      <button class="owner-tab" onclick="ownerTab('record')">Record Visit</button>
+      <button class="owner-tab" onclick="ownerTab('customers')">Customers</button>
+      <button class="owner-tab" onclick="ownerTab('offers')">Offers</button>
+      <button class="owner-tab" onclick="ownerTab('settings')">Settings</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="panel-dashboard" class="owner-panel active">
+      <div class="stats-row" id="stats-row"></div>
+      <h2 class="section-title">All Customers</h2>
+      <div style="overflow-x:auto">
+        <table class="customers-table" id="main-customers-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Total Visits</th>
+              <th>Progress</th>
+              <th>Cycle</th>
+              <th>Free Due?</th>
+              <th>Last Visit</th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RECORD VISIT -->
+    <div id="panel-record" class="owner-panel">
+      <div class="card">
+        <h3>Record a Haircut Visit</h3>
+        <div class="record-search">
+          <div class="form-group" style="flex:1;margin:0">
+            <input type="text" id="record-search-input" placeholder="Search customer by name..." oninput="searchCustomerRecord()">
+          </div>
+        </div>
+        <div id="record-search-results"></div>
+        <div id="record-customer-found" class="hidden">
+          <div class="customer-found">
+            <div class="cf-name" id="rcf-name">—</div>
+            <div class="cf-stats" id="rcf-stats">—</div>
+            <div class="progress-dots" id="rcf-dots" style="margin-bottom:1rem"></div>
+          </div>
+          <button class="btn btn-primary" onclick="recordVisit()">✓ Record This Visit</button>
+          <div id="record-msg" class="msg mt1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS MANAGEMENT -->
+    <div id="panel-customers" class="owner-panel">
+      <div class="two-col">
+        <div class="card">
+          <h3>Add New Customer</h3>
+          <div id="add-cust-msg" class="msg"></div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="new-cust-name" placeholder="e.g. Anna Novák">
+          </div>
+          <div class="form-group">
+            <label>Login Name (username)</label>
+            <input type="text" id="new-cust-login" placeholder="e.g. anna">
+          </div>
+          <div class="form-group">
+            <label>PIN / Password</label>
+            <input type="password" id="new-cust-pass" placeholder="4-digit PIN or password">
+          </div>
+          <div class="form-group">
+            <label>Phone (optional)</label>
+            <input type="text" id="new-cust-phone" placeholder="+420 000 000 000">
+          </div>
+          <button class="btn btn-primary" onclick="addCustomer()">Add Customer</button>
+        </div>
+        <div class="card">
+          <h3>Customer List</h3>
+          <div id="manage-customers-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OFFERS -->
+    <div id="panel-offers" class="owner-panel">
+      <div class="two-col">
+        <div class="card">
+          <h3>Add New Offer</h3>
+          <div id="add-offer-msg" class="msg"></div>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="offer-title" placeholder="e.g. Spring Special">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="offer-desc" rows="3" placeholder="Describe the offer..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Badge Label (optional)</label>
+            <input type="text" id="offer-badge" placeholder="e.g. 20% Off, New, Limited">
+          </div>
+          <button class="btn btn-gold" onclick="addOffer()">Publish Offer</button>
+        </div>
+        <div class="card">
+          <h3>Active Offers</h3>
+          <div id="offers-manage-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="panel-settings" class="owner-panel">
+      <div class="card" style="max-width:480px">
+        <h3>Salon Settings</h3>
+        <div id="settings-msg" class="msg"></div>
+        <div class="form-group">
+          <label>Salon Name</label>
+          <input type="text" id="setting-salon-name" placeholder="My Salon">
+        </div>
+        <div class="form-group">
+          <label>Visits for Free Haircut</label>
+          <input type="number" id="setting-visits-free" value="10" min="1" max="50">
+        </div>
+        <div class="form-group">
+          <label>Change Owner Password</label>
+          <input type="password" id="setting-new-pass" placeholder="Leave blank to keep current">
+        </div>
+        <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA LAYER — uses window.storage (persistent)
+// Falls back to localStorage for development
+// ══════════════════════════════════════════
+
+const DB_KEY = 'salon_db_v1';
+let db = null;
+let currentUser = null;
+let currentRole = null;
+
+const defaultDB = {
+  settings: {
+    salonName: 'Salon Loyalty',
+    visitsForFree: 10,
+    ownerPass: 'salon2024'
+  },
+  customers: {},
+  offers: []
+};
+
+async function loadDB() {
+  try {
+    const result = await window.storage.get(DB_KEY, true);
+    db = result ? JSON.parse(result.value) : JSON.parse(JSON.stringify(defaultDB));
+  } catch(e) {
+    // try localStorage fallback
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      db = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultDB));
+    } catch(e2) {
+      db = JSON.parse(JSON.stringify(defaultDB));
+    }
+  }
+  if(!db.settings) db.settings = defaultDB.settings;
+  if(!db.customers) db.customers = {};
+  if(!db.offers) db.offers = [];
+}
+
+async function saveDB() {
+  try {
+    await window.storage.set(DB_KEY, JSON.stringify(db), true);
+  } catch(e) {
+    try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch(e2){}
+  }
+}
+
+// ══════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='customer'&&i===0)||(tab==='owner'&&i===1)));
+  document.getElementById('tab-customer').classList.toggle('hidden', tab!=='customer');
+  document.getElementById('tab-owner').classList.toggle('hidden', tab!=='owner');
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  setTimeout(() => { el.className = 'msg'; }, 3500);
+}
+
+function ownerTab(name) {
+  document.querySelectorAll('.owner-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.owner-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='dashboard') renderDashboard();
+  if(name==='customers') renderManageCustomers();
+  if(name==='offers') renderManageOffers();
+  if(name==='settings') loadSettings();
+}
+
+// ══════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════
+function customerLogin() {
+  const login = document.getElementById('cust-login').value.trim().toLowerCase();
+  const pass = document.getElementById('cust-pass').value;
+  if(!login||!pass) { showMsg('cust-msg','Please fill in all fields','error'); return; }
+
+  const cust = Object.values(db.customers).find(c => c.login.toLowerCase()===login);
+  if(!cust || cust.pass !== pass) { showMsg('cust-msg','Incorrect name or PIN','error'); return; }
+
+  currentUser = cust.id;
+  currentRole = 'customer';
+  enterApp();
+}
+
+function ownerLogin() {
+  const pass = document.getElementById('owner-pass').value;
+  if(pass !== db.settings.ownerPass) { showMsg('owner-msg','Incorrect password','error'); return; }
+  currentUser = 'owner';
+  currentRole = 'owner';
+  enterApp();
+}
+
+function enterApp() {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  if(currentRole === 'customer') {
+    const cust = db.customers[currentUser];
+    document.getElementById('header-user').textContent = cust.name;
+    document.getElementById('customer-view').style.display = 'block';
+    document.getElementById('owner-view').classList.add('hidden');
+    renderCustomerView(cust);
+  } else {
+    document.getElementById('header-user').textContent = 'Salon Owner';
+    document.getElementById('owner-view').classList.remove('hidden');
+    document.getElementById('customer-view').style.display = 'none';
+    renderDashboard();
+  }
+}
+
+function logout() {
+  currentUser = null;
+  currentRole = null;
+  document.getElementById('splash').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('cust-login').value = '';
+  document.getElementById('cust-pass').value = '';
+  document.getElementById('owner-pass').value = '';
+}
+
+// ══════════════════════════════════════════
+// CUSTOMER VIEW
+// ══════════════════════════════════════════
+function renderCustomerView(cust) {
+  document.getElementById('cust-name-display').textContent = cust.name.split(' ')[0];
+
+  const visits = cust.visits || [];
+  const total = visits.length;
+  const free = db.settings.visitsForFree || 10;
+  const cyclePos = total % free;
+  const cyclesCompleted = Math.floor(total / free);
+  const display = cyclePos === 0 && total > 0 ? free : cyclePos;
+  const pct = (display / free) * 100;
+
+  document.getElementById('cut-count-display').innerHTML = `${display} <span>/ ${free}</span>`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // dots
+  const dotsEl = document.getElementById('progress-dots');
+  dotsEl.innerHTML = '';
+  for(let i=1; i<=free; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i < display ? ' filled' : '') + (i === free ? ' free' : '');
+    d.innerHTML = i === free ? '★' : (i <= display ? '✓' : '');
+    dotsEl.appendChild(d);
+  }
+
+  // next free text
+  const remaining = free - display;
+  if(display === free || (cyclePos === 0 && total > 0)) {
+    document.getElementById('next-free-text').textContent = '🎉 You have earned a FREE haircut!';
+  } else {
+    document.getElementById('next-free-text').textContent = `${remaining} more visit${remaining!==1?'s':''} until your free haircut`;
+  }
+
+  // coupon
+  const couponSection = document.getElementById('coupon-section');
+  if(cust.freeCoupon) {
+    couponSection.classList.remove('hidden');
+    document.getElementById('coupon-code-display').textContent = cust.freeCoupon;
+  } else {
+    couponSection.classList.add('hidden');
+  }
+
+  // offers
+  renderOffersCustomer();
+
+  // history
+  const histEl = document.getElementById('history-list');
+  if(visits.length === 0) {
+    histEl.innerHTML = '<div class="empty-state"><div class="empty-icon">✂</div><p>No visits recorded yet</p></div>';
+  } else {
+    histEl.innerHTML = [...visits].reverse().map((v,i) => {
+      const num = visits.length - i;
+      const isFree = num % free === 0;
+      return `<div class="history-item">
+        <span class="visit-num">#${num}</span>
+        <span>${v.note || 'Haircut'}</span>
+        <span class="visit-date">${v.date}</span>
+        ${isFree ? '<span class="badge-free">Free</span>' : ''}
+      </div>`;
+    }).join('');
+  }
+}
+
+function renderOffersCustomer() {
+  const grid = document.getElementById('offers-grid');
+  if(!db.offers || db.offers.length===0) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🌸</div><p>No offers at the moment</p></div>';
+    return;
+  }
+  grid.innerHTML = db.offers.map(o => `
+    <div class="offer-card">
+      ${o.badge ? `<span class="offer-badge">${o.badge}</span>` : ''}
+      <h4>${o.title}</h4>
+      <p>${o.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════
+// OWNER — DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  const custs = Object.values(db.customers);
+  const free = db.settings.visitsForFree || 10;
+  const totalVisits = custs.reduce((s,c) => s+(c.visits||[]).length, 0);
+  const freeDue = custs.filter(c => {
+    const v = (c.visits||[]).length;
+    return v > 0 && v % free === 0 && c.freeCoupon;
+  }).length;
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${custs.length}</div><div class="stat-label">Customers</div></div>
+    <div class="stat-card"><div class="stat-val">${totalVisits}</div><div class="stat-label">Total Visits</div></div>
+    <div class="stat-card"><div class="stat-val">${freeDue}</div><div class="stat-label">Free Coupons Active</div></div>
+    <div class="stat-card"><div class="stat-val">${db.offers.length}</div><div class="stat-label">Active Offers</div></div>
+  `;
+
+  const tbody = document.getElementById('customers-tbody');
+  if(custs.length===0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No customers yet — add them in the Customers tab</td></tr>';
+    return;
+  }
+  tbody.innerHTML = custs.sort((a,b)=>a.name.localeCompare(b.name)).map(c => {
+    const visits = (c.visits||[]).length;
+    const cyclePos = visits % free;
+    const display = cyclePos===0&&visits>0 ? free : cyclePos;
+    const dots = Array.from({length:free},(_, i)=>`<div class="mini-dot ${i<display?'on':''} ${i===free-1?'gold':''}"></div>`).join('');
+    const lastVisit = c.visits && c.visits.length ? c.visits[c.visits.length-1].date : '—';
+    const freeDue2 = c.freeCoupon ? '<span class="badge-due">Coupon Active</span>' : '';
+    return `<tr>
+      <td><strong>${c.name}</strong><br><small style="color:var(--muted)">${c.login}</small></td>
+      <td>${visits}</td>
+      <td><div class="loyalty-mini">${dots}</div></td>
+      <td>${Math.floor(visits/free)+1}</td>
+      <td>${freeDue2}</td>
+      <td>${lastVisit}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// OWNER — RECORD VISIT
+// ══════════════════════════════════════════
+let selectedCustomerRecord = null;
+
+function searchCustomerRecord() {
+  const q = document.getElementById('record-search-input').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('record-search-results');
+  const foundEl = document.getElementById('record-customer-found');
+  foundEl.classList.add('hidden');
+  selectedCustomerRecord = null;
+
+  if(!q) { resultsEl.innerHTML = ''; return; }
+
+  const matches = Object.values(db.customers).filter(c =>
+    c.name.toLowerCase().includes(q) || c.login.toLowerCase().includes(q)
+  );
+
+  if(matches.length===0) {
+    resultsEl.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;margin-bottom:1rem">No customers found</p>';
+    return;
+  }
+
+  resultsEl.innerHTML = matches.map(c => `
+    <div class="history-item" style="cursor:pointer;margin-bottom:0.4rem" onclick="selectCustomerRecord('${c.id}')">
+      <span><strong>${c.name}</strong> <small style="color:var(--muted)">(${c.login})</small></span>
+      <span style="color:var(--muted);font-size:0.8rem">${(c.visits||[]).length} visits</span>
+    </div>
+  `).join('');
+}
+
+function selectCustomerRecord(id) {
+  selectedCustomerRecord = id;
+  const c = db.customers[id];
+  const free = db.settings.visitsForFree || 10;
+  const visits = (c.visits||[]).length;
+  const cyclePos = visits % free;
+  const display = cyclePos===0&&visits>0 ? free : cyclePos;
+  const remaining = free - display;
+
+  document.getElementById('record-search-results').innerHTML = '';
+  document.getElementById('record-search-input').value = c.name;
+
+  document.getElementById('rcf-name').textContent = c.name;
+  document.getElementById('rcf-stats').textContent = `${visits} total visits · ${remaining} visits until next free haircut`;
+
+  const dots = document.getElementById('rcf-dots');
+  dots.innerHTML = Array.from({length:free},(_, i)=>`
+    <div class="dot ${i<display?'filled':''} ${i===free-1?'free':''}">
+      ${i===free-1?'★':(i<display?'✓':'')}
+    </div>`).join('');
+
+  document.getElementById('record-customer-found').classList.remove('hidden');
+  document.getElementById('record-msg').className = 'msg';
+}
+
+async function recordVisit() {
+  if(!selectedCustomerRecord) return;
+  const c = db.customers[selectedCustomerRecord];
+  const free = db.settings.visitsForFree || 10;
+
+  if(!c.visits) c.visits = [];
+  const date = new Date().toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
+  c.visits.push({ date, note: 'Haircut' });
+
+  const total = c.visits.length;
+
+  // Check if free earned
+  if(total % free === 0) {
+    c.freeCoupon = 'FREE-' + c.login.toUpperCase().slice(0,4) + '-' + Math.floor(Math.random()*9000+1000);
+  }
+
+  await saveDB();
+
+  const isFree = total % free === 0;
+  showMsg('record-msg', isFree
+    ? `✓ Visit recorded! 🎉 ${c.name} has earned a FREE haircut! Coupon: ${c.freeCoupon}`
+    : `✓ Visit #${total} recorded for ${c.name}`, 'success');
+
+  // refresh dots
+  selectCustomerRecord(selectedCustomerRecord);
+  renderDashboard();
+}
+
+// ══════════════════════════════════════════
+// OWNER — CUSTOMERS MANAGEMENT
+// ══════════════════════════════════════════
+async function addCustomer() {
+  const name = document.getElementById('new-cust-name').value.trim();
+  const login = document.getElementById('new-cust-login').value.trim().toLowerCase();
+  const pass = document.getElementById('new-cust-pass').value;
+  const phone = document.getElementById('new-cust-phone').value.trim();
+
+  if(!name||!login||!pass) { showMsg('add-cust-msg','Please fill name, login and password','error'); return; }
+
+  const exists = Object.values(db.customers).find(c => c.login===login);
+  if(exists) { showMsg('add-cust-msg','Login name already taken','error'); return; }
+
+  const id = 'c_' + Date.now();
+  db.customers[id] = { id, name, login, pass, phone, visits: [], freeCoupon: null, joined: new Date().toLocaleDateString('en-GB') };
+
+  await saveDB();
+  showMsg('add-cust-msg', `${name} added successfully!`, 'success');
+  document.getElementById('new-cust-name').value = '';
+  document.getElementById('new-cust-login').value = '';
+  document.getElementById('new-cust-pass').value = '';
+  document.getElementById('new-cust-phone').value = '';
+  renderManageCustomers();
+}
+
+function renderManageCustomers() {
+  const el = document.getElementById('manage-customers-list');
+  const custs = Object.values(db.customers);
+  if(custs.length===0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">👤</div><p>No customers yet</p></div>';
+    return;
+  }
+  el.innerHTML = custs.sort((a,b)=>a.name.localeCompare(b.name)).map(c => `
+    <div class="offer-manage-item">
+      <div class="offer-info">
+        <h4>${c.name}</h4>
+        <p>${c.login} · ${(c.visits||[]).length} visits${c.phone?' · '+c.phone:''}</p>
+        ${c.freeCoupon ? `<span class="badge-free">${c.freeCoupon}</span>` : ''}
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-direction:column">
+        ${c.freeCoupon ? `<button class="btn btn-sm btn-secondary" onclick="redeemCoupon('${c.id}')">Redeem</button>` : ''}
+        <button class="btn btn-sm btn-danger" onclick="deleteCustomer('${c.id}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function redeemCoupon(id) {
+  if(!confirm('Mark free haircut as redeemed for this customer?')) return;
+  db.customers[id].freeCoupon = null;
+  await saveDB();
+  renderManageCustomers();
+  renderDashboard();
+}
+
+async function deleteCustomer(id) {
+  if(!confirm('Remove this customer? All their visits will be deleted.')) return;
+  delete db.customers[id];
+  await saveDB();
+  renderManageCustomers();
+  renderDashboard();
+}
+
+// ══════════════════════════════════════════
+// OWNER — OFFERS
+// ══════════════════════════════════════════
+async function addOffer() {
+  const title = document.getElementById('offer-title').value.trim();
+  const desc = document.getElementById('offer-desc').value.trim();
+  const badge = document.getElementById('offer-badge').value.trim();
+  if(!title||!desc) { showMsg('add-offer-msg','Please fill title and description','error'); return; }
+
+  db.offers.push({ id: 'o_'+Date.now(), title, desc, badge });
+  await saveDB();
+  showMsg('add-offer-msg','Offer published!','success');
+  document.getElementById('offer-title').value = '';
+  document.getElementById('offer-desc').value = '';
+  document.getElementById('offer-badge').value = '';
+  renderManageOffers();
+}
+
+function renderManageOffers() {
+  const el = document.getElementById('offers-manage-list');
+  if(!db.offers||db.offers.length===0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🌸</div><p>No offers yet</p></div>';
+    return;
+  }
+  el.innerHTML = db.offers.map(o => `
+    <div class="offer-manage-item">
+      <div class="offer-info">
+        ${o.badge ? `<span class="offer-badge">${o.badge}</span><br>` : ''}
+        <h4>${o.title}</h4>
+        <p>${o.desc}</p>
+      </div>
+      <button class="btn btn-sm btn-danger" onclick="deleteOffer('${o.id}')">Remove</button>
+    </div>
+  `).join('');
+}
+
+async function deleteOffer(id) {
+  db.offers = db.offers.filter(o => o.id!==id);
+  await saveDB();
+  renderManageOffers();
+}
+
+// ══════════════════════════════════════════
+// SETTINGS
+// ══════════════════════════════════════════
+function loadSettings() {
+  document.getElementById('setting-salon-name').value = db.settings.salonName || '';
+  document.getElementById('setting-visits-free').value = db.settings.visitsForFree || 10;
+}
+
+async function saveSettings() {
+  const name = document.getElementById('setting-salon-name').value.trim();
+  const visits = parseInt(document.getElementById('setting-visits-free').value);
+  const newPass = document.getElementById('setting-new-pass').value;
+
+  if(name) db.settings.salonName = name;
+  if(visits && visits>0) db.settings.visitsForFree = visits;
+  if(newPass) db.settings.ownerPass = newPass;
+
+  await saveDB();
+  showMsg('settings-msg','Settings saved!','success');
+  document.getElementById('setting-new-pass').value = '';
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+(async () => {
+  await loadDB();
+  // Enter key on login
+  document.getElementById('cust-pass').addEventListener('keydown', e => { if(e.key==='Enter') customerLogin(); });
+  document.getElementById('owner-pass').addEventListener('keydown', e => { if(e.key==='Enter') ownerLogin(); });
+})();
+</script>
+</body>
+</html>
